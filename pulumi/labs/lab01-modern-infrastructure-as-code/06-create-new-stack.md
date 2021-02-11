@@ -2,7 +2,7 @@
 
 在 Pulumi 可以很簡單的建立多種環境，像是 Testing 或 Production，只要將動態變數抽出來設定成 config 即可。底下來看看怎麼建立全先的環境，這步驟在 Pulumi 叫做 Stack。前面已經建立一個 dev 環境，現在我們要建立一個全新環境來部署 Testing 或 Production 該如何做呢？
 
-## 建立全新 Stack 環境
+## 步驟一: 建立全新 Stack 環境
 
 透過 pulumi stack 可以建立全新環境
 
@@ -31,7 +31,7 @@ pulumi config set aws:profile demo
 pulumi config set aws:region ap-northeast-1
 ```
 
-## 建立 www 內容
+## 步驟二: 建立 www 內容
 
 建立 `content/www` 目錄，一樣放上 index.htm + about.html
 
@@ -53,7 +53,7 @@ about.html
 </html>
 ```
 
-## 部署 New Stack
+## 步驟三: 部署 New Stack
 
 先看看 Preview 結果
 
