@@ -119,3 +119,7 @@ func main() {
 	})
 }
 ```
+
+## 下一個章節
+
+=> [設定 AWS 環境](./02-configuring-aws.md)

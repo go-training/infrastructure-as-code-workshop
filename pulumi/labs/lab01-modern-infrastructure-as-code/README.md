@@ -3,7 +3,7 @@
 第一個 Lab 帶你了解 Pulumi 的環境設定跟 Code 目錄結構
 
 1. [建立 Pulumi 新專案](./01-create-new-project.md)
-2. 設定 AWS 環境
+2. [設定 AWS 環境](./)
 3. 初始化 AWS 架構
 4. 更新 AWS 架構
 5. 設定 Stack 環境變數
