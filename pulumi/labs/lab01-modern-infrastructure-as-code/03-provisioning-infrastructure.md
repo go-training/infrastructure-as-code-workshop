@@ -168,3 +168,7 @@ Do you want to perform this update? details
 ```
 
 可以看到系統會砍掉舊的，在建立一個新的 bucket
+
+## 下一個章節
+
+=> [更新 AWS 架構 (S3 Hosting)](./04-updating-your-infrastructure.md)
