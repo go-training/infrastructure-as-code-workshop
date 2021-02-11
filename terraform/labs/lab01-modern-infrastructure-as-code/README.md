@@ -4,3 +4,4 @@
 
 1. [建立 Terraform 新專案](./01-create-new-project.md)
 2. [設定 AWS 環境](./02-configuring-aws.md)
+3. [建立 S3 Bucket](./03-provisioning-infrastructure.md)
