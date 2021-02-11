@@ -21,7 +21,8 @@ func main() {
 			return err
 		}
 
-		index := path.Join("content", "index.html")
+		site := getEnv(ctx, "s3:siteDir", "content")
+		index := path.Join(site, "index.html")
 		_, err = s3.NewBucketObject(ctx, "index.html", &s3.BucketObjectArgs{
 			Bucket:      bucket.Bucket,
 			Source:      pulumi.NewFileAsset(index),
@@ -40,4 +41,16 @@ func main() {
 
 		return nil
 	})
+}
+
+func getEnv(ctx *pulumi.Context, key string, fallback ...string) string {
+	if value, ok := ctx.GetConfig(key); ok {
+		return value
+	}
+
+	if len(fallback) > 0 {
+		return fallback[0]
+	}
+
+	return ""
 }
