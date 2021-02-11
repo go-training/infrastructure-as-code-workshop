@@ -1,4 +1,4 @@
-# 初始化 Pulumi 架構
+# 初始化 Pulumi 架構 (建立 S3 Bucket)
 
 ## 步驟一: 建立新的 S3 Bucket
 
@@ -52,7 +52,7 @@ Do you want to perform this update? details
 
 可以看到更詳細的建立步驟及權限，在此步驟可以詳細知道 Pulumi 會怎麼設定 AWS 架構，透過此預覽方式避免人為操作失誤。
 
-## 步驟三: 執行操作
+## 步驟三: 執行部署
 
 看完上面的預覽，我們最後就直接執行:
 
@@ -80,7 +80,7 @@ Duration: 17s
 ![changes](./images/pulumi-changes.png)
 ![times](./images/pulumi-time.png)
 
-## 步驟三: 顯示更多 Bucket 詳細資訊
+## 步驟四: 顯示更多 Bucket 詳細資訊
 
 ```go
 		// Export the name of the bucket
@@ -108,7 +108,7 @@ Resources:
 Duration: 7s
 ```
 
-## 步驟四: 更新 Bucket 名稱
+## 步驟五: 更新 Bucket 名稱
 
 ```go
 func main() {

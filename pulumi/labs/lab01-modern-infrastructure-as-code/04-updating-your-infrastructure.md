@@ -1,4 +1,4 @@
-# 更新 Infra 架構
+# 更新 AWS 架構 (S3 Hosting)
 
 上個步驟教大家如何建立 Infra 架構，那這單元教大家如何將使用 S3 當一個簡單的 Web Hosting。
 
