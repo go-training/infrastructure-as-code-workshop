@@ -1,6 +1,6 @@
 # Lab 1 — 基礎 Infrastructure as Code 設定
 
-第一個 Lab 帶你了解 Pulumi 的環境設定跟 Code 結構
+第一個 Lab 帶你了解 Pulumi 的環境設定跟 Code 目錄結構
 
 1. 建立新專案
 2. 設定 AWS 環境
