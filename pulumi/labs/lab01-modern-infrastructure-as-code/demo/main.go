@@ -1,8 +1,10 @@
 package main
 
 import (
+	"io/ioutil"
 	"mime"
 	"path"
+	"path/filepath"
 
 	"github.com/pulumi/pulumi-aws/sdk/v3/go/aws/s3"
 	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
@@ -22,16 +24,21 @@ func main() {
 		}
 
 		site := getEnv(ctx, "s3:siteDir", "content")
-		index := path.Join(site, "index.html")
-		_, err = s3.NewBucketObject(ctx, "index.html", &s3.BucketObjectArgs{
-			Bucket:      bucket.Bucket,
-			Source:      pulumi.NewFileAsset(index),
-			Acl:         pulumi.String("public-read"),
-			ContentType: pulumi.String(mime.TypeByExtension(path.Ext(index))),
-		})
-
+		files, err := ioutil.ReadDir(site)
 		if err != nil {
 			return err
+		}
+
+		for _, item := range files {
+			name := item.Name()
+			if _, err = s3.NewBucketObject(ctx, name, &s3.BucketObjectArgs{
+				Bucket:      bucket.Bucket,
+				Source:      pulumi.NewFileAsset(filepath.Join(site, name)),
+				Acl:         pulumi.String("public-read"),
+				ContentType: pulumi.String(mime.TypeByExtension(path.Ext(filepath.Join(site, name)))),
+			}); err != nil {
+				return err
+			}
 		}
 
 		// Export the name of the bucket
