@@ -189,4 +189,4 @@ func getEnv(ctx *pulumi.Context, key string, fallback ...string) string {
 
 ## 下一個章節
 
-=> [建立第二個 Pulumi Stack 環境](./06.-create-new-stack.md)
+=> [建立第二個 Pulumi Stack 環境](./06-create-new-stack.md)

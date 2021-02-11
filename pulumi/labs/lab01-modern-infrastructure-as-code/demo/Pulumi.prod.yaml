@@ -1,4 +1,0 @@
-config:
-  aws:profile: demo
-  aws:region: ap-northeast-1
-  s3:siteDir: www
