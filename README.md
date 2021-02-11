@@ -8,3 +8,7 @@
 
 [1]: https://golang.org
 [2]: https://aws.amazon.com/tw/s3/
+
+## Terraform
+
+* [lab01: Terraform 環境初始介紹](/terraform/labs/lab01-modern-infrastructure-as-code/README.md) 建立 AWS S3 環境
