@@ -27,3 +27,7 @@ cd demo && pulumi config set aws:region ap-northeast-1
 ```sh
 pulumi config set aws:profile demo
 ```
+
+## 下一個章節
+
+=> [初始化 Pulumi 架構](./03-provisioning-infrastructure.md)
