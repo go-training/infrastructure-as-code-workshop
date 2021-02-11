@@ -14,7 +14,7 @@ aws configure --profile demo
 
 打開 demo 目錄內的 `terraform.tf` 檔案，在內容後面補上
 
-```sh
+```tf
 provider "aws" {
   profile = "demo"
   region  = "ap-northeast-1"

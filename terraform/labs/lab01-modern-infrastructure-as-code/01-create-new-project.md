@@ -36,7 +36,7 @@ Terraform v0.14.6
 
 建立 `demo` 專案目錄，並且新增 `terraform.tf` 檔案，內容如下:
 
-```sh
+```tf
 terraform {
   required_providers {
     aws = {
