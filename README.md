@@ -4,4 +4,7 @@
 
 ## Pulumi
 
-* [lab01: Pulumi 環境初始介紹](/pulumi/labs/lab01-modern-infrastructure-as-code/README.md)
+* [lab01: Pulumi 環境初始介紹](/pulumi/labs/lab01-modern-infrastructure-as-code/README.md) 使用 [Go 語言][1]搭配 [AWS S3][2]
+
+[1]: https://golang.org
+[2]: https://aws.amazon.com/tw/s3/
