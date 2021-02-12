@@ -20,3 +20,8 @@ provider "aws" {
   region  = "ap-northeast-1"
 }
 ```
+
+## 下一個章節
+
+=> [建立 S3 Bucket](./03-provisioning-infrastructure.md)
+
