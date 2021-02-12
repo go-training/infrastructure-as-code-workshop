@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "b" {
 resource "aws_s3_bucket_object" "index" {
   bucket       = aws_s3_bucket.b.id
   key          = "index.html"
-  source       = "content/index.html"
+  source       = file("${path.module}/content/index.html")
   acl          = "public-read"
   content_type = "text/html; charset=utf-8"
 }
