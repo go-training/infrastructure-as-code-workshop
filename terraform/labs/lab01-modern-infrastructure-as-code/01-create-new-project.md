@@ -34,7 +34,7 @@ Terraform v0.14.6
 
 ## 步驟二: 初始化專案
 
-建立 `demo` 專案目錄，並且新增 `terraform.tf` 檔案，內容如下:
+建立 `demo` 專案目錄，並且新增 `main.tf` 檔案，內容如下:
 
 ```tf
 terraform {

@@ -75,3 +75,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 接著你可以看到在目錄底下多了兩個檔案 `terraform.tfstate` 跟 `terraform.tfstate.backup`，請注意務必將 `.tfstate` 放入 `.gitignore` 列表內，不要將此檔案放到 git 版本控制內。
+
+## 下一個章節
+
+=> [更新 AWS 架構 (S3 Hosting)](./04-updating-your-infrastructure.md)
