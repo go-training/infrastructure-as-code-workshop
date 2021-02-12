@@ -87,7 +87,7 @@ resource "aws_s3_bucket" "b" {
 }
 ```
 
-最後新增 `output.tf` 新增 `website_endpoint` 顯示結果
+最後新增 `outputs.tf` 新增 `website_endpoint` 顯示結果
 
 ```tf
 output "s3_webhost_url" {
