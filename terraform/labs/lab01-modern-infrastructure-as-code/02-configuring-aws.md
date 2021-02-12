@@ -24,4 +24,3 @@ provider "aws" {
 ## 下一個章節
 
 => [建立 S3 Bucket](./03-provisioning-infrastructure.md)
-
