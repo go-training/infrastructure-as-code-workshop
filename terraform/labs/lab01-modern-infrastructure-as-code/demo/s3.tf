@@ -1,5 +1,10 @@
+resource "random_pet" "petname" {
+  length    = 3
+  separator = "-"
+}
+
 resource "aws_s3_bucket" "b" {
-  bucket = "foobar4567"
+  bucket = "${var.bucket}-${random_pet.petname.id}"
   acl    = "private"
 
   website {

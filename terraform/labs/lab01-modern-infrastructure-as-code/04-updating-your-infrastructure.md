@@ -158,3 +158,7 @@ $ curl -v foobar4567.s3-website-ap-northeast-1.amazonaws.com
 * Connection #0 to host foobar4567.s3-website-ap-northeast-1.amazonaws.com left intact
 * Closing connection 0
 ```
+
+## 下一個章節
+
+=> [設定 Terrafrom 環境變數](./05-making-your-stack-configurable.md)
