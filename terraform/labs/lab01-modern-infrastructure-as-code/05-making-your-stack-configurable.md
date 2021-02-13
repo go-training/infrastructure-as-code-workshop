@@ -169,7 +169,7 @@ Changes to Outputs:
 
 ## 步驟三: 讀取更多檔案
 
-如果每個 html 檔案都要寫一個 config，這樣相當麻煩，透過底下方式可以讀取單一目錄直接設定
+如果每個 html 檔案都要寫一個 config，這樣相當麻煩，透過底下方式可以讀取單一目錄直接設定，可以參考這篇設定『[Uploading Multiple files in AWS S3 from terraform](https://stackoverflow.com/questions/57456167/uploading-multiple-files-in-aws-s3-from-terraform)』
 
 ```tf
 resource "aws_s3_bucket_object" "content" {
