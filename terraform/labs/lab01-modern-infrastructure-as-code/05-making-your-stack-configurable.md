@@ -168,3 +168,88 @@ Changes to Outputs:
 ```
 
 ## 步驟三: 讀取更多檔案
+
+如果每個 html 檔案都要寫一個 config，這樣相當麻煩，透過底下方式可以讀取單一目錄直接設定
+
+```tf
+resource "aws_s3_bucket_object" "content" {
+  bucket       = aws_s3_bucket.b.id
+  acl          = "public-read"
+  content_type = "text/html; charset=utf-8"
+
+  for_each = fileset("content/", "*")
+  key    = each.value
+  source = "content/${each.value}"
+  # etag makes the file update when it changes; see https://stackoverflow.com/questions/56107258/terraform-upload-file-to-s3-on-every-apply
+  etag   = filemd5("content/${each.value}")
+}
+```
+
+透過 terraform 的 fileset 讀取全部資料。最後執行部署
+
+```sh
+$ terraform apply -var-file=dev.tfvars
+random_pet.petname: Refreshing state... [id=rightly-healthy-griffon]
+aws_s3_bucket_object.index: Refreshing state... [id=index.html]
+aws_s3_bucket.b: Refreshing state... [id=example-rightly-healthy-griffon]
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  + create
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket_object.content["about.html"] will be created
+  + resource "aws_s3_bucket_object" "content" {
+      + acl                    = "public-read"
+      + bucket                 = "example-rightly-healthy-griffon"
+      + content_type           = "text/html; charset=utf-8"
+      + etag                   = "c00772d098b074161c79200aee996d0f"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "about.html"
+      + server_side_encryption = (known after apply)
+      + source                 = "content/about.html"
+      + storage_class          = (known after apply)
+      + version_id             = (known after apply)
+    }
+
+  # aws_s3_bucket_object.content["index.html"] will be created
+  + resource "aws_s3_bucket_object" "content" {
+      + acl                    = "public-read"
+      + bucket                 = "example-rightly-healthy-griffon"
+      + content_type           = "text/html; charset=utf-8"
+      + etag                   = "f3a63be8f363c2478ffc79f169610d36"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "index.html"
+      + server_side_encryption = (known after apply)
+      + source                 = "content/index.html"
+      + storage_class          = (known after apply)
+      + version_id             = (known after apply)
+    }
+
+  # aws_s3_bucket_object.index will be destroyed
+  - resource "aws_s3_bucket_object" "index" {
+      - acl           = "public-read" -> null
+      - bucket        = "example-rightly-healthy-griffon" -> null
+      - content_type  = "text/html; charset=utf-8" -> null
+      - etag          = "f3a63be8f363c2478ffc79f169610d36" -> null
+      - force_destroy = false -> null
+      - id            = "index.html" -> null
+      - key           = "index.html" -> null
+      - metadata      = {} -> null
+      - source        = "content/index.html" -> null
+      - storage_class = "STANDARD" -> null
+      - tags          = {} -> null
+    }
+
+Plan: 2 to add, 0 to change, 1 to destroy.
+```
+
+這邊要注意 `content_type` 的設定，如果目錄底下有很多不同格式的檔案，這樣需要分別設定 content type，依照其他方式分類，像是 `images/png` 或 `text/html` 區分開來設定。這邊如果是換作 `Pulumi` 就可以用程式方式來透過副檔名來自動讀取 type，底下是 Go 語言範例:
+
+```go
+mime.TypeByExtension(path.Ext(filepath.Join(site, name)))
+```

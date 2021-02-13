@@ -12,10 +12,14 @@ resource "aws_s3_bucket" "b" {
   }
 }
 
-resource "aws_s3_bucket_object" "index" {
+resource "aws_s3_bucket_object" "content" {
   bucket       = aws_s3_bucket.b.id
-  key          = "index.html"
-  source       = "content/index.html"
   acl          = "public-read"
   content_type = "text/html; charset=utf-8"
+
+  for_each = fileset("content/", "*")
+  key    = each.value
+  source = "content/${each.value}"
+  # etag makes the file update when it changes; see https://stackoverflow.com/questions/56107258/terraform-upload-file-to-s3-on-every-apply
+  etag   = filemd5("content/${each.value}")
 }
