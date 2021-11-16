@@ -3,10 +3,10 @@
 ## 步驟一: 建立新的 S3 Bucket
 
 ```go
-		bucket, err := s3.NewBucket(ctx, "my-bucket", nil)
-		if err != nil {
-			return err
-		}
+    bucket, err := s3.NewBucket(ctx, "my-bucket", nil)
+    if err != nil {
+      return err
+    }
 ```
 
 ## 步驟二: 執行 Pulumi CLI 預覽
@@ -83,9 +83,9 @@ Duration: 17s
 ## 步驟四: 顯示更多 Bucket 詳細資訊
 
 ```go
-		// Export the name of the bucket
-		ctx.Export("bucketID", bucket.ID())
-		ctx.Export("bucketName", bucket.Bucket)
+    // Export the name of the bucket
+    ctx.Export("bucketID", bucket.ID())
+    ctx.Export("bucketName", bucket.Bucket)
 ```
 
 執行 `pulumi up`
@@ -112,20 +112,20 @@ Duration: 7s
 
 ```go
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Create an AWS resource (S3 Bucket)
-		bucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
-			Bucket: pulumi.String("foobar-1234"),
-		})
-		if err != nil {
-			return err
-		}
+  pulumi.Run(func(ctx *pulumi.Context) error {
+    // Create an AWS resource (S3 Bucket)
+    bucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+      Bucket: pulumi.String("foobar-1234"),
+    })
+    if err != nil {
+      return err
+    }
 
-		// Export the name of the bucket
-		ctx.Export("bucketID", bucket.ID())
-		ctx.Export("bucketName", bucket.Bucket)
-		return nil
-	})
+    // Export the name of the bucket
+    ctx.Export("bucketID", bucket.ID())
+    ctx.Export("bucketName", bucket.Bucket)
+    return nil
+  })
 }
 ```
 

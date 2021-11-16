@@ -6,15 +6,15 @@
 
 ```go
 func getEnv(ctx *pulumi.Context, key string, fallback ...string) string {
-	if value, ok := ctx.GetConfig(key); ok {
-		return value
-	}
+  if value, ok := ctx.GetConfig(key); ok {
+    return value
+  }
 
-	if len(fallback) > 0 {
-		return fallback[0]
-	}
+  if len(fallback) > 0 {
+    return fallback[0]
+  }
 
-	return ""
+  return ""
 }
 ```
 
@@ -36,14 +36,14 @@ config:
 接著將程式碼改成如下:
 
 ```go
-		site := getEnv(ctx, "s3:siteDir", "content")
-		index := path.Join(site, "index.html")
-		_, err = s3.NewBucketObject(ctx, "index.html", &s3.BucketObjectArgs{
-			Bucket:      bucket.Bucket,
-			Source:      pulumi.NewFileAsset(index),
-			Acl:         pulumi.String("public-read"),
-			ContentType: pulumi.String(mime.TypeByExtension(path.Ext(index))),
-		})
+    site := getEnv(ctx, "s3:siteDir", "content")
+    index := path.Join(site, "index.html")
+    _, err = s3.NewBucketObject(ctx, "index.html", &s3.BucketObjectArgs{
+      Bucket:      bucket.Bucket,
+      Source:      pulumi.NewFileAsset(index),
+      Acl:         pulumi.String("public-read"),
+      ContentType: pulumi.String(mime.TypeByExtension(path.Ext(index))),
+    })
 ```
 
 ## 步驟二: 進行部署
@@ -79,23 +79,23 @@ Do you want to perform this update? details
 整個 Web 專案肯定不止一個檔案，所以再來改一下原本的讀取檔案列表流程
 
 ```go
-		site := getEnv(ctx, "s3:siteDir", "content")
-		files, err := ioutil.ReadDir(site)
-		if err != nil {
-			return err
-		}
+    site := getEnv(ctx, "s3:siteDir", "content")
+    files, err := ioutil.ReadDir(site)
+    if err != nil {
+      return err
+    }
 
-		for _, item := range files {
-			name := item.Name()
-			if _, err = s3.NewBucketObject(ctx, name, &s3.BucketObjectArgs{
-				Bucket:      bucket.Bucket,
-				Source:      pulumi.NewFileAsset(filepath.Join(site, name)),
-				Acl:         pulumi.String("public-read"),
-				ContentType: pulumi.String(mime.TypeByExtension(path.Ext(filepath.Join(site, name)))),
-			}); err != nil {
-				return err
-			}
-		}
+    for _, item := range files {
+      name := item.Name()
+      if _, err = s3.NewBucketObject(ctx, name, &s3.BucketObjectArgs{
+        Bucket:      bucket.Bucket,
+        Source:      pulumi.NewFileAsset(filepath.Join(site, name)),
+        Acl:         pulumi.String("public-read"),
+        ContentType: pulumi.String(mime.TypeByExtension(path.Ext(filepath.Join(site, name)))),
+      }); err != nil {
+        return err
+      }
+    }
 ```
 
 執行部署
@@ -125,65 +125,65 @@ Duration: 9s
 package main
 
 import (
-	"io/ioutil"
-	"mime"
-	"path"
-	"path/filepath"
+  "io/ioutil"
+  "mime"
+  "path"
+  "path/filepath"
 
-	"github.com/pulumi/pulumi-aws/sdk/v3/go/aws/s3"
-	"github.com/pulumi/pulumi/sdk/v2/go/pulumi"
+  "github.com/pulumi/pulumi-aws/sdk/v4/go/aws/s3"
+  "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Create an AWS resource (S3 Bucket)
-		bucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
-			Bucket: pulumi.String("foobar-1234"),
-			Website: s3.BucketWebsiteArgs{
-				IndexDocument: pulumi.String("index.html"),
-			},
-		})
-		if err != nil {
-			return err
-		}
+  pulumi.Run(func(ctx *pulumi.Context) error {
+    // Create an AWS resource (S3 Bucket)
+    bucket, err := s3.NewBucket(ctx, "my-bucket", &s3.BucketArgs{
+      Bucket: pulumi.String("foobar-1234"),
+      Website: s3.BucketWebsiteArgs{
+        IndexDocument: pulumi.String("index.html"),
+      },
+    })
+    if err != nil {
+      return err
+    }
 
-		site := getEnv(ctx, "s3:siteDir", "content")
-		files, err := ioutil.ReadDir(site)
-		if err != nil {
-			return err
-		}
+    site := getEnv(ctx, "s3:siteDir", "content")
+    files, err := ioutil.ReadDir(site)
+    if err != nil {
+      return err
+    }
 
-		for _, item := range files {
-			name := item.Name()
-			if _, err = s3.NewBucketObject(ctx, name, &s3.BucketObjectArgs{
-				Bucket:      bucket.Bucket,
-				Source:      pulumi.NewFileAsset(filepath.Join(site, name)),
-				Acl:         pulumi.String("public-read"),
-				ContentType: pulumi.String(mime.TypeByExtension(path.Ext(filepath.Join(site, name)))),
-			}); err != nil {
-				return err
-			}
-		}
+    for _, item := range files {
+      name := item.Name()
+      if _, err = s3.NewBucketObject(ctx, name, &s3.BucketObjectArgs{
+        Bucket:      bucket.Bucket,
+        Source:      pulumi.NewFileAsset(filepath.Join(site, name)),
+        Acl:         pulumi.String("public-read"),
+        ContentType: pulumi.String(mime.TypeByExtension(path.Ext(filepath.Join(site, name)))),
+      }); err != nil {
+        return err
+      }
+    }
 
-		// Export the name of the bucket
-		ctx.Export("bucketID", bucket.ID())
-		ctx.Export("bucketName", bucket.Bucket)
-		ctx.Export("bucketEndpoint", bucket.WebsiteEndpoint)
+    // Export the name of the bucket
+    ctx.Export("bucketID", bucket.ID())
+    ctx.Export("bucketName", bucket.Bucket)
+    ctx.Export("bucketEndpoint", bucket.WebsiteEndpoint)
 
-		return nil
-	})
+    return nil
+  })
 }
 
 func getEnv(ctx *pulumi.Context, key string, fallback ...string) string {
-	if value, ok := ctx.GetConfig(key); ok {
-		return value
-	}
+  if value, ok := ctx.GetConfig(key); ok {
+    return value
+  }
 
-	if len(fallback) > 0 {
-		return fallback[0]
-	}
+  if len(fallback) > 0 {
+    return fallback[0]
+  }
 
-	return ""
+  return ""
 }
 ```
 
